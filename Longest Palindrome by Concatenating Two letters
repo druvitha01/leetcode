@@ -1,0 +1,24 @@
+class Solution:
+    def longestPalindrome(self, words: List[str]) -> int:
+        d = defaultdict(int)
+        matched = defaultdict(int)
+        res = 0
+
+        for word in words:
+            if word[0] == word[1]:
+                if word in matched:
+                    res += 4
+                    del matched[word]
+                else:
+                    matched[word] += 1
+            else:
+                if word in d:
+                    res += 4
+                    d[word] -= 1
+                    if d[word] == 0:
+                        del d[word]
+                else:
+                    d[word[::-1]] += 1
+        return res + 2 if matched else res
+
+        
